@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferreteria AC</title>
+    <link rel="stylesheet" href="tabla.css">
+    
+</head>
+<body>
+    <div class="contenedor">
+        <div class="logo">
+        <img src="img/logo.jpg" alt="logo" height="150px" width="200px"></div>
+    </div>
+    <h5>Bienvenidos a la Ferreteria AC</h5>
+
+    <form action="guardado.html" method="post" class="formulario">
+        <label>Código</label>
+        <input type="text" id="txtCodigo" placeholder="Ingrese un código de producto">
+        <br><br>
+        <label>Descripción</label>
+        <input type="text" id="txtDescripcion" placeholder="Ingrese la descripción">
+
+        <br><br>
+        <label>Código de barra</label>
+        <input type="text" id="txtCod_Barra">
+
+        <br><br>
+        <label>Precio Unitario</label>
+        <input type="text" id="txtPrecio">
+        
+        <br><br>
+        <label>Stock</label>
+        <input type="text" id="txtStock">
+
+        <br><br>
+        <label>Proveedor</label>
+        <input type="text" id="txtProveedor">
+
+
+        <br><br>
+        <label>Estado</label><br>
+        <input type="checkbox" id="chOpcionSi"> Si
+        <input type="checkbox" id="chOpcionNo"> No
+    
+        <label>Categorías</label>
+        <select id="cbDepartamentos">
+            <option value="1">Herramientas</option>
+            <option value="2">Pinturas</option>
+            <option value="3">Accesorios</option>
+            <option value="4">Electricidad</option>
+        </select>
+
+        <br><br>
+        <input type="submit" value="Guardar" onclick="mensaje()">
+        <input type="button" value="Cancelar">
+    </form>
+    <br>
+</body>
+<footer>
+    <br>
+    <br>
+    <h4>Creado por: Claudia Romero - Kodigo - El Salvador</h4>
+    <br>
+    <br> 
+    <br>
+    <br>
+</footer>
+</html>
+
+<script>
+    function mensaje(){
+
+        alert(document.querySelector("#txtCodigo").value)
+        alert(document.querySelector("#txtDescripcion").value)
+        alert(document.querySelector("#chOpcion1").checked)
+        alert(document.querySelector("#chOpcion2").checked)
+    }
+</script>
