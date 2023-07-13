@@ -14,7 +14,7 @@
     </div>
     <h5>Bienvenidos a la Ferreteria AC</h5>
 
-    <form action="guardado.html" method="post" class="formulario">
+    <form action="productos.html" method="post" class="formulario">
         <label>Código</label>
         <input type="text" id="txtCodigo" placeholder="Ingrese un código de producto">
         <br><br>
@@ -52,28 +52,11 @@
         </select>
 
         <br><br>
-        <input type="submit" value="Guardar" onclick="mensaje()">
-        <input type="button" value="Cancelar">
+            <a href="/Tarea02-Forms/guardado.html" class="button green">
+            <span class="bi bi-plus-lg"></span>Guardar
+            <br>
+            <a href="/Tarea02-Forms/index.html" class="button green">
+                <span class="bi bi-plus-lg"></span>Cancelar
     </form>
-    <br>
 </body>
-<footer>
-    <br>
-    <br>
-    <h4>Creado por: Claudia Romero - Kodigo - El Salvador</h4>
-    <br>
-    <br> 
-    <br>
-    <br>
-</footer>
 </html>
-
-<script>
-    function mensaje(){
-
-        alert(document.querySelector("#txtCodigo").value)
-        alert(document.querySelector("#txtDescripcion").value)
-        alert(document.querySelector("#chOpcion1").checked)
-        alert(document.querySelector("#chOpcion2").checked)
-    }
-</script>
