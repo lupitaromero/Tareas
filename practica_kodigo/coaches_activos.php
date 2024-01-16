@@ -47,11 +47,10 @@
                             <td><?php echo $item['correo']; ?></td>
                             <td><?php echo $item['titulo']; ?></td>
                             <td>
-                                <form action="./actualizar_coach.php" method="post">
+                                <form action="./actualizar_coach.php" method="GET">
                                     <input type="hidden" name="id_coach" value="<?php echo $item['id']; ?>">
                                     <input type="submit" class="btn btn-primary" value="Editar">
                                 </form>
-                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalEstado<?php echo $item['id']; ?>">Estado</button>
                             </td>
                         </tr>
 

@@ -30,7 +30,7 @@ class Coaches extends Conexion{
         return $resultado;
     }
 
-    public function registrar($nombre, $direccion, $correo, $titulo) {
+    public function registrar($nombre, $direccion, $correo, $titulo, $id_materia, $id_estado, $id_rol, $bootcamps) {
         $password = "Kodigo2023"; // Asigna la contraseña aquí o de alguna forma segura
         $materia = 1; // Asigna la materia correcta aquí
         $estado = 1; // Asigna el estado correcto aquí
@@ -45,8 +45,8 @@ class Coaches extends Conexion{
             $id_coach = $pdo->lastInsertId();
     
             // Asociar bootcamps (necesitas obtener los bootcamps del formulario)
-            $bootcamps = $_POST['bootcamps']; // Asegúrate de que esta variable tenga los bootcamps seleccionados
-            $this->asociarBootcamps($id_coach, $bootcamps);
+           // $bootcamps = $_POST['bootcamps']; // Asegúrate de que esta variable tenga los bootcamps seleccionados
+            $this->asociarBootcamps($id_coach, $id_materia);
     
             return true;
         } else {
@@ -56,11 +56,11 @@ class Coaches extends Conexion{
     
     private function asociarBootcamps($coachId, $bootcamps) {
         $pdo = $this->conectar();
-        $query = $pdo->prepare("INSERT INTO detalle_bootcamps_coach ( id_bootcamp, id_coach,) VALUES (?, ?)");
+        $query = $pdo->prepare("INSERT INTO detalle_bootcamps_coach ( id_bootcamp, id_coach) VALUES (?, ?)");
     
-        foreach ($bootcamps as $bootcamp) {
-            $query->execute([$coachId, $bootcamp]);
-        }
+        //foreach ($bootcamps as $bootcamp) {
+            $query->execute([$bootcamps, $coachId]);
+        //}
     }
 
     public function obtenerCoachesActivos(){
@@ -72,8 +72,8 @@ class Coaches extends Conexion{
     }
 
     public function obtenerById(){
-        if(isset($_POST['id_coach'])){
-            $this->id = $_POST['id_coach'];
+        if(isset($_GET['id_coach'])){
+            $this->id = $_GET['id_coach'];
 
             $pdo = $this->conectar();
             $query = $pdo->query("SELECT id, nombre, direccion, correo, titulo FROM coaches WHERE id = $this->id");
@@ -84,26 +84,29 @@ class Coaches extends Conexion{
         }
     }
 
-    public function actualizar()
-{
-    if (isset($_POST['id_coach'], $_POST['nombre'], $_POST['direccion'], $_POST['correo'], $_POST['titulo'], $_POST['id_materia'], $_POST['id_estado'], $_POST['bootcamps'])) {
-        $this->nombre = $_POST['nombre'];
-        $this->direccion = $_POST['direccion'];
-        $this->correo = $_POST['correo'];
-        $this->titulo = $_POST['titulo'];
-        $this->id = $_POST['id_coach'];
-        $this->id_materia = $_POST['id_materia'];
-        $this->id_estado = $_POST['id_estado'];
-        $bootcamps = $_POST['bootcamps'];
+    public function obtenerDetalleBootCampByIdCoach(){
+        if(isset($_GET['id_coach'])){
+            $this->id = $_GET['id_coach'];
 
+            $pdo = $this->conectar();
+            $query = $pdo->query("SELECT id_bootcamp, id_coach FROM detalle_bootcamps_coach WHERE id_coach = $this->id");
+
+            $query->execute();
+            $resultado = $query->fetch(PDO::FETCH_ASSOC); //arreglo de objetos
+            return $resultado;
+        }
+    }
+    public function actualizar($id_coach, $nombre, $direccion, $correo, $titulo, $id_bootcamp, $id_estado, $id_rol)
+{
+        
         $pdo = $this->conectar();
         $query = $pdo->prepare("UPDATE coaches SET nombre = ?, direccion = ?, correo = ?, titulo = ?, id_materia = ?, id_estado = ? WHERE id = ?");
 
-        $resultado = $query->execute(["$this->nombre", "$this->direccion", "$this->correo", "$this->titulo", "$this->id_materia", "$this->id_estado", "$this->id"]);
+        $resultado = $query->execute([$nombre,$direccion, $correo, $titulo, $id_bootcamp, $id_estado, $id_coach ]);
 
         if ($resultado) {
             // Actualizar asociación de bootcamps
-            $this->actualizarBootcamps($this->id, $bootcamps);
+            //$this->actualizarBootcamps($this->id, $bootcamps);
 
             echo "<script>
                 window.location = './coaches_activos.php'
@@ -112,7 +115,7 @@ class Coaches extends Conexion{
             echo "Error al actualizar al coach";
         }
     }
-}
+
 
  #metodo para seleccionar el estado
  public function estadoByActivoInactivo(){

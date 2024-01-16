@@ -30,6 +30,9 @@
         include "./modulos/header.php";
         require "./clases/Coaches.php";
 
+          // Instanciar la clase Coaches
+          $coach = new Coaches();
+
         // Verificar si se envió el formulario
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Obtener datos del formulario
@@ -40,7 +43,7 @@
             $id_materia = $_POST["bootcamp"]; // Cambié el nombre del campo a "bootcamp"
             $id_estado = 1; // Puedes asignar el estado directamente aquí
             $id_rol = 2; // Puedes asignar el rol directamente aquí
-            $bootcamps = isset($_POST["materia"]) ? $_POST["materia"] : [];
+            $bootcamps = isset($_POST["materias"]) ? $_POST["materias"] : [];
 
         
 
@@ -54,8 +57,7 @@
             }
         }
 
-        // Instanciar la clase Coaches
-        $coach = new Coaches();
+      
 
         // Obtener los bootcamps y materias después de procesar el formulario
         $arreglo_materias = $coach->getMaterias();

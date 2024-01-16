@@ -31,7 +31,32 @@
         // Instanciamos la clase Coaches
         $coaches = new Coaches();
         $datos = $coaches->obtenerById();
+        $bootcams = $coaches->obtenerDetalleBootCampByIdCoach();
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Obtener datos del formulario
+            $id_coach = $_POST["id_coach"];
+            $nombre = $_POST["nombre"];
+            $direccion = $_POST["direccion"];
+            $correo = $_POST["correo"];
+            $titulo = $_POST["titulo"];
+            $id_bootcamp = $_POST["bootcamp"]; // Cambié el nombre del campo a "bootcamp"
+            $id_estado = $_POST["id_estado"];  // Puedes asignar el estado directamente aquí
+            $id_rol = 2; // Puedes asignar el rol directamente aquí
+            $bootcamps = isset($_POST["materias"]) ? $_POST["materias"] : [];
+
+              // Registrar el nuevo coach
+              $resultado = $coaches->actualizar($id_coach, $nombre, $direccion, $correo, $titulo, $id_bootcamp, $id_estado, $id_rol);
+
+              if ($resultado) {
+                  echo "<p class='text-success'>Registro exitoso. El nuevo coach ha sido actualizado.</p>";
+              } else {
+                  echo "<p class='text-danger'>Error al actualizar el nuevo coach.</p>";
+              }
+          }
     ?>
+
+    
     
     <main id="main">
         <section class="container">
@@ -39,6 +64,7 @@
 
             <form action="" method="POST">
                 <?php foreach($datos as $coach) { ?>
+
 
                 <input type="hidden" name="id_coach" value="<?php echo $coach['id']; ?>">
 
@@ -61,7 +87,7 @@
                     <?php 
                         $arreglo_bootcamps = $coaches->getBootcamps();
                         foreach ($arreglo_bootcamps as $bootcamp) {
-                            $selected = ($bootcamp['id'] == $coach['id_bootcamp']) ? 'selected' : '';
+                            $selected = ($bootcamp['id'] == $bootcams["id_bootcamp"]) ? 'selected' : '';
                             echo "<option value='" . $bootcamp["id"] . "' $selected>" . $bootcamp["bootcamp"] . "</option>";
                         }
                     ?>
@@ -79,7 +105,6 @@
                 <?php } ?>
             </form>
 
-            <?php $coaches->actualizar(); ?>
         </section>
     </main>
     <?php include "./modulos/footer.php";  ?>
